@@ -1,0 +1,16 @@
+<div id="mapid">map works!</div>
+<div class="ee-search">
+  <input name="buscar"
+        (keyup.enter)="search_Url(searchText.value)"
+        #searchText
+        type="text" placeholder="Search for any IP address or domain"     id="ee-search" class="ee-search-field">
+  <label id="btn-search" (click)="search_Url(searchText.value)"  for="ee-search"></label>
+</div>
+
+<div class="ee-content" *ngFor="let nodo of location; index as i">
+  {{ nodo.as.domain }}
+  {{ nodo.ip }}
+  {{ nodo.location.city }}
+  {{ nodo.location.timezone }}
+  {{ nodo.isp}}
+</div>

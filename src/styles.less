@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'less/All.less';
+
+body {
+  &:extend(.body all);
+  margin: 0;
+}
+
+blockquote,
+figure,
+hr {
+  margin: 0;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}

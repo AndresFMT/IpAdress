@@ -1,0 +1,48 @@
+
+:root {
+  --headlineFont: 'Rubik';
+  --body: 1rem;
+  --title: 1.5rem;
+  --label: 1rem;
+  --subheadline: 1.15rem;
+}
+
+@bodyFontFamily: var(--headlineFont), Arial, Helvetica, sans-serif;
+// for some reason using our LESS vars for media queries messes up here
+@media screen and (min-width: 768px) {
+  :root {
+    --title: 1.875rem;
+    --label: 1.125rem;
+    --subheadline: 1.3rem;
+  }
+}
+
+// for some reason using our LESS vars for media queries messes up here
+@media screen and (min-width: 1024px) {
+  :root {
+    --title: 2rem;
+    --label: 1.3rem;
+    --subheadline: 1.4375rem;
+  }
+}
+
+.body {
+  font-family: @bodyFontFamily;
+  font-size: var(--body);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.title {
+  font-family: @bodyFontFamily;
+  font-size: var(--title);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.label {
+  font-family: @bodyFontFamily;
+  font-size: var(--label);
+  font-weight: 400;
+  line-height: 1.6;
+}

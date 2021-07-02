@@ -2,18 +2,12 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { LeafletService } from '../leaflet.service';
 import * as L from 'leaflet';
 
-const iconRetinaUrl = 'assets/marker-icon-2x.png';
-const iconUrl = 'assets/marker-icon.png';
-const shadowUrl = 'assets/marker-shadow.png';
+const iconRetinaUrl = 'assets/icon-location.svg';
 const iconDefault = L.icon({
   iconRetinaUrl,
-  iconUrl,
-  shadowUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  tooltipAnchor: [16, -28],
-  shadowSize: [41, 41]
+  iconSize: [35, 40],
+  iconAnchor: [35, 40],
+  shadowSize: [35, 40]
 });
 
 L.Marker.prototype.options.icon = iconDefault;
@@ -23,16 +17,25 @@ L.Marker.prototype.options.icon = iconDefault;
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.less']
 })
+
 export class MapComponent implements AfterViewInit, OnInit {
 
+  private map;
   location: any;
-  locate: any;
-  mapa2: any;
+  error: any;
+  poPupError = false;
 
   // tslint:disable-next-line:variable-name
   constructor(private _service: LeafletService) { }
 
-  private map;
+  ngAfterViewInit(): void {
+    this.initMap();
+  }
+
+  // tslint:disable-next-line:typedef
+  ngOnInit() {
+    this.search_Url(this.location);
+  }
 
   // tslint:disable-next-line:typedef
   private initMap() {
@@ -50,34 +53,34 @@ export class MapComponent implements AfterViewInit, OnInit {
         this.map.setView([data.location.lat, data.location.lng ], 13);
         L.marker([data.location.lat, data.location.lng], {icon: iconDefault}).addTo(this.map);
         tiles.addTo(this.map);
-      },
-      err => console.error(err)
+      }
     );
   }
-
-  ngAfterViewInit(): void {
-    this.initMap();
-  }
-
-
-  // tslint:disable-next-line:typedef
-  ngOnInit() {
-    this.search_Url(this.location);
-  }
-
 
   // tslint:disable-next-line:typedef
   search_Url(id: string) {
     return this._service.getService(id).subscribe(
       data => {
-        console.log(data);
         this.location = [data];
-        this.map.setView([data.location.lat, data.location.lng ], 13);
-        L.marker([data.location.lat, data.location.lng], {icon: iconDefault}).addTo(this.map);
+        if (this.map !== undefined) {
+          this.map.setView([data.location.lat, data.location.lng ], 13);
+          L.marker([data.location.lat, data.location.lng], {icon: iconDefault}).addTo(this.map);
+        }
         console.log(this.location);
         return this.location;
       },
-      err => console.error(err)
+      err => {
+        console.log(err);
+        this.error = 'Ip not found';
+        this.location = [];
+        this.poPupError = true;
+        return this.error;
+      }
     );
+  }
+
+  // tslint:disable-next-line:typedef
+  closePop() {
+    this.poPupError = false;
   }
 }

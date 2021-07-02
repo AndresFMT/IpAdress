@@ -1,9 +1,8 @@
 import {environment} from '../environments/environment';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { getMaxListeners } from 'process';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable()
@@ -17,6 +16,12 @@ export class LeafletService {
     this.geoIpi = 'https://geo.ipify.org/api/v1?apiKey=' + this.key + '&ipAddress=';
   }
 
+
+  // tslint:disable-next-line:typedef
+  handleError(error: HttpErrorResponse){
+    return throwError(error);
+  }
+
   private setHeaders(): HttpHeaders {
     const headersConfig = {
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -25,27 +30,29 @@ export class LeafletService {
     };
     return new HttpHeaders(headersConfig);
   }
-
-  getService(ipNumber: string): Observable<any> {
-    const ipLocation = ipNumber === undefined ? '' : ipNumber;
-    return this.http.get(this.geoIpi + ipLocation, {responseType: 'text'}).pipe(
-      map(
-        (data: any) => {
-            const dateGeo = data;
-            return JSON.parse(dateGeo);
-        }
-      )
-    );
-  }
-
   getInit(): Observable<any> {
     return this.http.get(this.geoIpi, {responseType: 'text'}).pipe(
       map(
         (data: any) => {
             const dateGeo = data;
             return JSON.parse(dateGeo);
-        }
-      )
+        },
+      ),
+      catchError(this.handleError)
     );
   }
+
+  getService(ipNumber: string): Observable<any> {
+    const ipLocation = ipNumber === undefined ? '' : ipNumber;
+    return this.http.get(this.geoIpi + ipLocation, {responseType: 'text'}).pipe(
+      map(
+        (data: any) => {
+          const dateGeo = data;
+          return JSON.parse(dateGeo);
+        }
+      ),
+      catchError(this.handleError)
+    );
+  }
+
 }

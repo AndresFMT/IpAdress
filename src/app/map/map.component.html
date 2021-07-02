@@ -1,16 +1,47 @@
-<div id="mapid">map works!</div>
-<div class="ee-search">
-  <input name="buscar"
-        (keyup.enter)="search_Url(searchText.value)"
-        #searchText
-        type="text" placeholder="Search for any IP address or domain"     id="ee-search" class="ee-search-field">
-  <label id="btn-search" (click)="search_Url(searchText.value)"  for="ee-search"></label>
-</div>
-
-<div class="ee-content" *ngFor="let nodo of location; index as i">
-  {{ nodo.as.domain }}
-  {{ nodo.ip }}
-  {{ nodo.location.city }}
-  {{ nodo.location.timezone }}
-  {{ nodo.isp}}
-</div>
+<section class="Adress">
+  <div class="Adress-wrapper">
+    <h1 class="Adress-title">IP Address Tracker</h1>
+    <div class="Adress-search">
+      <input name="buscar"
+            (keyup.enter)="search_Url(searchText.value)"
+            #searchText
+            type="text" placeholder="Search for any IP address or domain" class="Adress-search-input">
+      <label class="Adress-search-label" (click)="search_Url(searchText.value)"  for="Adress-search-label">
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="14"><path fill="none" stroke="#FFF" stroke-width="3" d="M2 1l6 6-6 6"/></svg>
+      </label>
+    </div>
+    <div class="Adress-info" *ngFor="let nodo of location; index as i">
+      <ul class="Adress-info-list">
+        <li class="Adress-info-ip">
+          <span>DOMAIN</span>
+          <span *ngIf="nodo.as?.domain; else elseBlock; let domain">{{domain}}</span>
+        </li>
+        <li class="Adress-info-ip" *ngIf="nodo?.ip; else elseBlock; let ip">
+          <span>IP ADDRESS</span>
+          {{ip}}
+        </li>
+        <li class="Adress-info-city" *ngIf="nodo.location?.city; else elseBlock; let city">
+          <span>LOCATION</span>
+          {{city}}
+        </li>
+        <li class="Adress-info-timezone" *ngIf="nodo.location?.timezone; else elseBlock; let timezone">
+          <span>TIMEZONE</span>
+          {{timezone}}
+        </li>
+        <li class="Adress-info-isp" *ngIf="nodo?.isp; else elseBlock; let isp">
+          <span>ISP</span>
+          {{isp}}
+        </li>
+        <ng-template #elseBlock>Not Found Information.</ng-template>
+      </ul>
+    </div>
+    <div class="Adress-popUp" *ngIf="poPupError">
+      <div class= "content-popUp">
+          <svg id="check" xmlns:xlink="http://www.w3.org/1999/xlink" height="32px" version="1.1" viewBox="0 0 30 30" width="100%" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" id="copa_mb_2019" stroke="none" stroke-width="1" transform="translate(-30, 5)"><g id="final-team-1" transform="translate(0.000000, 1.000000)"><circle cx="43.6071429" cy="9" fill="#FFFFFF" fill-rule="nonzero" id="Oval" r="9" stroke="#101E73" stroke-width="0.6"></circle><g id="check" stroke="#101E73" transform="translate(35.000000, 0.000000)"><g><circle cx="9" cy="9" fill="#FFFFFF" fill-rule="nonzero" id="Oval" r="9.25" stroke-width="0.5"></circle><polyline id="Check" points="3 9.5 6.5 13 14.5 5"></polyline></g></g></g></g></svg>
+          <p class="text">{{error}}</p>
+          <div class="close" (click)="closePop()"></div>
+      </div>
+  </div>
+  </div>
+  <div class="Adress-map" id="mapid"></div>
+</section>

@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { LeafletService } from '../leaflet.service';
 import * as L from 'leaflet';
 
@@ -27,6 +27,8 @@ export class MapComponent implements AfterViewInit, OnInit {
 
   // tslint:disable-next-line:variable-name
   constructor(private _service: LeafletService) { }
+
+  @ViewChild('searchText') searchInput: ElementRef;
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -66,7 +68,6 @@ export class MapComponent implements AfterViewInit, OnInit {
           this.map.setView([data.location.lat, data.location.lng ], 13);
           L.marker([data.location.lat, data.location.lng], {icon: iconDefault}).addTo(this.map);
         }
-        console.log(this.location);
         return this.location;
       },
       err => {
@@ -82,5 +83,7 @@ export class MapComponent implements AfterViewInit, OnInit {
   // tslint:disable-next-line:typedef
   closePop() {
     this.poPupError = false;
+    this.searchInput.nativeElement.value = '';
+    this.search_Url(this.location);
   }
 }

@@ -27,7 +27,7 @@
     height: @gap * 2.25;
 
     &-input {
-      &:extend(.label all);
+      &:extend(.body all);
       border: 0;
       border-radius: @gapMed 0 0 @gapMed;
       flex: 1;
@@ -49,122 +49,118 @@
     background: var(--white);
     border-radius: @gapMed;
     padding: @gap;
+
+    &-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: @gapMed 0;
+    }
+
+    &-item-title {
+      &:extend(.label all);
+      letter-spacing: 1px;
+      color: var(--Dark-Gray-Secondary);
+    }
+
+    &-item-text {
+      &:extend(.subheadline all);
+    }
   }
 
   &-map {
     width: 100%;
-    height: 500px;
+    height: 100vh;
     z-index: 1;
   }
-}
 
-@media @mq-viewport-md {
-  label {
-    background: red;
-  }
-}
-
-
-@media @mq-viewport-lg {
-  label {
-    background: yellow;
-  }
-}
-
-@media @mq-viewport-hk {
-  label {
-    background: green;
-  }
-}
-
-@media @mq-viewport-xl {
-  label {
-    background: orange;
-  }
-}
-
-
-// Color variables (appears count calculates by raw css)
-@color0: #ffffff; // Appears 3 times
-@color1: #979797; // Appears 3 times
-@color2: #212121; // Appears 2 times
-
-// Width variables (appears count calculates by raw css)
-@width2: 100%; // Appears 2 times
-
-
-.Adress-popUp {
-  animation: fadein 0.5s ease-in-out;
-  background: rgba(0, 0, 0, 0.07);
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: @width2;
-  z-index: 2;
-  .content-popUp {
-    align-content: center;
+  &-popUp {
+    animation: fadein 0.5s ease-in-out;
     align-items: center;
-    background: @color0;
-    border: 1px solid @color1;
-    box-sizing: border-box;
-    display: inline-flex;
-    flex-wrap: wrap;
-    height: 140px;
+    background: rgba(0, 0, 0, 0.62);
+    display: flex;
+    height: 100%;
     justify-content: center;
-    padding: 15px;
-    position: relative;
-    top: 30%;
-    width: 300px;
-    &:after {
-      -webkit-transform: rotate(45deg);
-      background: @color0;
-      border-left: solid 1px @color1;
-      border-top: solid 1px @color1;
-      content: "";
-      height: 10px;
-      left: 48%;
-      position: absolute;
-      top: -5px;
-      transform: rotate(45deg);
-      width: 10px;
-    }
-    .close {
-      color: @color2;
-      cursor: pointer;
-      display: inline-flex;
-      font-size: 12px;
-      justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+
+    &-content {
+      align-items: center;
+      background: var(--white);
+      border: 1px solid var(--Dark-Gray-Secondary);
+      box-sizing: border-box;
+      display: flex;
+      flex-wrap: wrap;
+      height: 140px;
+      padding: 15px;
       position: relative;
-      width: 70%;
-      .close-content {
-        align-items: center;
-        background-image: url(/assets/images/button2021.svg);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        display: flex;
-        height: 45px;
+      top: @gap * 0.75;
+      width: 300px;
+
+      &-text {
+        &:extend(.body all);
+        position: relative;
+        text-align: center;
+        width: 100%;
+      }
+
+      &-close {
+        cursor: pointer;
         justify-content: center;
-        width: 150px;
-        p {
-          adding-top: 3px;
-          color: @color0;
-          font-family: 'Rubik';
-          font-size: 14px;
-          letter-spacing: 1px;
+        position: relative;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        right: @gap;
+        top: @gap;
+      }
+    }
+  }
+
+  @media @mq-viewport-md {
+    &-wrapper {
+      max-height: 225px;
+    }
+
+    &-search {
+      max-width: 500px;
+      margin: 0 auto;
+
+      &-label {
+        transition: 0.3s;
+        cursor: pointer;
+        &:hover {
+          background: var(--Dark-Gray-Secondary);
         }
       }
     }
-    .text {
-      color: @color2;
-      font-size: 16px;
-      line-height: normal;
-      position: relative;
-      text-align: center;
-      width: @width2;
+
+    &-info-list {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: (@gap * 2) auto;
+      width: 100%;
+      justify-content: space-between;
+
+      &-item {
+        align-items: flex-start;
+        border-right: 1px solid var(--Dark-Gray-Secondary);
+        margin: @gapMed 0;
+        padding-left: @gap;
+        width: 22%;
+
+        &:last-child {
+          border-right: 0;
+        }
+      }
+    }
+
+    &-map {
+      height: 100vh;
     }
   }
 }

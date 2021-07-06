@@ -12,34 +12,36 @@
     </div>
     <div class="Adress-info" *ngFor="let nodo of location; index as i">
       <ul class="Adress-info-list">
-        <li class="Adress-info-ip">
-          <span>DOMAIN</span>
-          <span *ngIf="nodo.as?.domain; else elseBlock; let domain">{{domain}}</span>
+        <li class="Adress-info-list-item">
+          <span class="Adress-info-list-item-title">IP ADDRESS</span>
+          <span class="Adress-info-list-item-text" *ngIf="nodo?.ip; else elseBlock; let ip">{{ip}}</span>
         </li>
-        <li class="Adress-info-ip" *ngIf="nodo?.ip; else elseBlock; let ip">
-          <span>IP ADDRESS</span>
-          {{ip}}
+        <li class="Adress-info-list-item">
+          <span class="Adress-info-list-item-title">LOCATION</span>
+          <span class="Adress-info-list-item-text" *ngIf="nodo.location?.city; else elseBlock; let city">{{city}}</span>
         </li>
-        <li class="Adress-info-city" *ngIf="nodo.location?.city; else elseBlock; let city">
-          <span>LOCATION</span>
-          {{city}}
+        <li class="Adress-info-list-item">
+          <span class="Adress-info-list-item-title">TIMEZONE</span>
+          <span class="Adress-info-list-item-text" *ngIf="nodo.location?.timezone; else elseBlock; let timezone">UTC{{timezone}}</span>
         </li>
-        <li class="Adress-info-timezone" *ngIf="nodo.location?.timezone; else elseBlock; let timezone">
-          <span>TIMEZONE</span>
-          {{timezone}}
-        </li>
-        <li class="Adress-info-isp" *ngIf="nodo?.isp; else elseBlock; let isp">
-          <span>ISP</span>
-          {{isp}}
+        <li class="Adress-info-list-item">
+          <span class="Adress-info-list-item-title">ISP</span>
+          <span class="Adress-info-list-item-text" *ngIf="nodo?.isp; else elseBlock; let isp">{{isp}}</span>
         </li>
         <ng-template #elseBlock>Not Found Information.</ng-template>
       </ul>
     </div>
     <div class="Adress-popUp" *ngIf="poPupError">
-      <div class= "content-popUp">
-          <svg id="check" xmlns:xlink="http://www.w3.org/1999/xlink" height="32px" version="1.1" viewBox="0 0 30 30" width="100%" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" id="copa_mb_2019" stroke="none" stroke-width="1" transform="translate(-30, 5)"><g id="final-team-1" transform="translate(0.000000, 1.000000)"><circle cx="43.6071429" cy="9" fill="#FFFFFF" fill-rule="nonzero" id="Oval" r="9" stroke="#101E73" stroke-width="0.6"></circle><g id="check" stroke="#101E73" transform="translate(35.000000, 0.000000)"><g><circle cx="9" cy="9" fill="#FFFFFF" fill-rule="nonzero" id="Oval" r="9.25" stroke-width="0.5"></circle><polyline id="Check" points="3 9.5 6.5 13 14.5 5"></polyline></g></g></g></g></svg>
-          <p class="text">{{error}}</p>
-          <div class="close" (click)="closePop()"></div>
+      <div class= "Adress-popUp-content">
+        <p class="Adress-popUp-content-text">{{error}}</p>
+        <div class="Adress-popUp-content-close" (click)="closePop()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20">
+            <g fill="#E83338" fill-rule="nonzero">
+                <path d="M16.394 19.016L.484 3.106a1.473 1.473 0 0 1 0-2.122 1.473 1.473 0 0 1 2.122 0l15.91 15.91c.6.601.6 1.52 0 2.122a1.473 1.473 0 0 1-2.122 0z"/>
+                <path d="M2.606 19.016l15.91-15.91a1.473 1.473 0 0 0 0-2.122 1.473 1.473 0 0 0-2.122 0L.484 16.894a1.473 1.473 0 0 0 0 2.122c.601.6 1.52.6 2.122 0z"/>
+            </g>
+          </svg>
+        </div>
       </div>
   </div>
   </div>
